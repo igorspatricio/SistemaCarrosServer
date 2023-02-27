@@ -1,5 +1,10 @@
 const carros = require("../model/Carros")
 
+const getCarros  = async (req, res) => {
+    result = await carros.findAll()
+    res.send(result)
+}
+
 const postCarro = async (req, res) => {
     const {placa, marca, modelo, ano, cor, cpf_dono} = req.body;
 
@@ -24,5 +29,6 @@ const postCarro = async (req, res) => {
 }
 
 module.exports = {
-    postCarro
+    postCarro,
+    getCarros
 }
