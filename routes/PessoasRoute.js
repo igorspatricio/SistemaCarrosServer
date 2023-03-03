@@ -6,10 +6,22 @@ router.route('/')
     .get(controller.getPessoas)
     .post(controller.postPessoa)
 
-router.route('/:genero')
-    .get(controller.getPessoasGenero)
 
-router.route('/infoPorGenero')
-    .get(controller.getInfoPessoasSeparadasPorGenero)
 
+
+router.route('/withcarowned')
+    .get(controller.getPessoasWithNumberCarOwned);
+
+
+router.route('/infobygender')
+    .get(controller.getInfoPessoasSeparadasPorGenero);
+
+router.route('/apartbygenero/:genero')
+    .get(controller.getPessoasGenero);
+
+
+
+
+
+    
 module.exports = router;

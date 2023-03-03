@@ -32,4 +32,6 @@ Carros.belongsTo(pessoas, {
     sourceKey: "cpf",
 });
 
+
+
 module.exports = Carros;

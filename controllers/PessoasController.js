@@ -1,5 +1,9 @@
 const pessoas = require('../model/Pessoas');
+
+
 const sequelize = require('sequelize')
+const { QueryTypes } = require('sequelize');
+const database = require('../db/db.js');
 
 const postPessoa = async (req, res) => {
     const {cpf, nome, idade, genero} = req.body;
@@ -8,6 +12,7 @@ const postPessoa = async (req, res) => {
     if (result){
         //cpf já existe no banco
         res.status(409).send("CPF já cadastrado!");
+        return
 
     }else{
         pessoas.create({
@@ -48,10 +53,18 @@ const getPessoasGenero = async (req, res) =>{
     res.send(result)
 }
 
+const getPessoasWithNumberCarOwned = async (req, res) => {
+    sql = 'select  cpf, nome, idade, genero, coalesce(carrosCount.count, 0) as Carros_cadastrados from (select cpf_dono_carro, count(cpf_dono_carro) from carros group by cpf_dono_carro ) as carrosCount right join pessoas on cpf = cpf_dono_carro'
+    result = await database.query(sql, { type: QueryTypes.SELECT })
+    
+    res.send(result)
+}
+
 
 module.exports = {
     postPessoa,
     getPessoas,
     getPessoasGenero,
-    getInfoPessoasSeparadasPorGenero
+    getInfoPessoasSeparadasPorGenero,
+    getPessoasWithNumberCarOwned
 }
