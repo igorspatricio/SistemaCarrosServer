@@ -1,5 +1,5 @@
 const revisoes = require('../model/Revisoes');
-const {carros} = require('../model/Carros');
+const carros = require('../model/Carros');
 const sequelize = require('sequelize')
 const database = require('../db/db')
 const { QueryTypes } = require('sequelize');
@@ -17,9 +17,8 @@ const postRevisao = async (req, res) => {
 
     const dataJS = new Date(data);
     const dataPostgres = dataJS.toISOString();
-
+    console.log(placa);
     placaExists = await carros.findOne({where:{placa: placa}})
-
 
 
     if(!placaExists){
